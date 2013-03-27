@@ -1,3 +1,4 @@
+
 package pentago;
 
 public class Board {
