@@ -19,11 +19,18 @@ public class Game {
 	}
 	
 	public void play() {
-		Move whiteMove = white.move(board);
-		board.move(whiteMove);
-		Move blackMove = black.move(board);
-		board.move(blackMove);
-		System.out.println(this);
+		for (int i=0;i<18;i++) {
+			Move whiteMove = white.move(board);
+			board.move(whiteMove);
+			Move blackMove = black.move(board);
+			board.move(blackMove);
+			System.out.println(i);
+			System.out.println(this);
+			if (board.detectWin()) {
+				System.out.println("We have a Bingo!");
+				break;
+			}
+		}
 	}
 	
 	public String toString() {

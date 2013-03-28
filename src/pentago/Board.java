@@ -1,6 +1,9 @@
 
 package pentago;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Board {
 	
 	Tile[] tiles = new Tile[4];
@@ -31,6 +34,48 @@ public class Board {
 			Tile rotTile = move.getRotationTile();
 			rotTile.rotate(move.getRotation());
 		}
+	}
+	
+	public boolean detectWin() {
+		//a win is any straight line of 5 same color stones
+		// Let's start at any coord and check if its the start of a winning line
+		for (Coordinate c: getBoardCoordinates()) {
+			Position p = getPositionAtCoord(c);
+			if (p.isPlayer()) {
+				// there are 8 possible ways to win from this position
+				for (String direction : Coordinate.DIRECTIONS) {
+					int count = 1;
+					Coordinate nextC = c;
+					while (count != 5) {
+						try {
+							nextC = nextC.getDirection(direction);
+							if (getPositionAtCoord(nextC).equals(p)) {
+								count++;
+							} else {
+								break;
+							}
+						} catch (InvalidCoordinateException ex) {
+							break;
+						}
+					}
+					if (count == 5) {
+						// we have a bingo!
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	public Iterable<Coordinate> getBoardCoordinates() {
+		List<Coordinate> temp = new ArrayList<Coordinate>();
+		for (int i = 0;i<6;i++) {
+			for (int j = 0;j<6;j++) {
+				temp.add(new Coordinate(i,j));
+			}
+		}
+		return temp;
 	}
 	
 	public String toString() {
@@ -85,7 +130,7 @@ public class Board {
 		} else if (tile == tiles[3]) {
 			c = coord.translate(-3, -3);
 		} else {
-			System.out.println("hÄÄ??");
+			System.out.println("hï¿½ï¿½??");
 		}
 		return c;
 	}

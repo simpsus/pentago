@@ -1,5 +1,7 @@
 package pentago;
 
+import java.util.Arrays;
+
 public class Tile {
 	
 	Position[] positions = new Position[9];
@@ -19,7 +21,28 @@ public class Tile {
 	}
 	
 	public void rotate(Rotation rot) {
-		System.out.println("Implement rotation");
+		Position[] temp = Arrays.copyOf(positions, 9);
+		if (rot == Rotation.CLOCKWISE) {
+			positions[0] = temp[6];
+			positions[1] = temp[3];
+			positions[2] = temp[0];
+			positions[3] = temp[7];
+			positions[4] = temp[4];
+			positions[5] = temp[1];
+			positions[6] = temp[8];
+			positions[7] = temp[5];
+			positions[8] = temp[2];
+		} else {
+			positions[0] = temp[2];
+			positions[1] = temp[5];
+			positions[2] = temp[8];
+			positions[3] = temp[1];
+			positions[4] = temp[4];
+			positions[5] = temp[7];
+			positions[6] = temp[0];
+			positions[7] = temp[3];
+			positions[8] = temp[6];
+		}
 	}
 
 	public String getLineRepresentation(int line) {

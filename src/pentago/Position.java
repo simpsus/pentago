@@ -15,5 +15,9 @@ public enum Position {
 	public String toString() {
 		return repr;
 	}
+	
+	public boolean isPlayer() {
+		return this != EMPTY;
+	}
 
 }
