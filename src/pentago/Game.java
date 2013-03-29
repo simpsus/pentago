@@ -5,6 +5,8 @@ public class Game {
 	Player white;
 	Player black;
 	Board board;
+	Player winner;
+	boolean isTie = false;
 	
 	public Game() {
 		board = new Board();
@@ -22,14 +24,25 @@ public class Game {
 		for (int i=0;i<18;i++) {
 			Move whiteMove = white.move(board);
 			board.move(whiteMove);
-			Move blackMove = black.move(board);
-			board.move(blackMove);
-			System.out.println(i);
-			System.out.println(this);
 			if (board.detectWin()) {
-				System.out.println("We have a Bingo!");
 				break;
 			}
+			Move blackMove = black.move(board);
+			board.move(blackMove);
+			if (board.detectWin()) {
+				break;
+			}
+		}
+		if (board.isWon) {
+			Position winnerPos = board.winnerPosition;
+			if (winnerPos == Position.BLACK) {
+				winner = black;
+			} else {
+				winner = white;
+			}
+		} else {
+			//We have a tie
+			isTie = true;
 		}
 	}
 	
@@ -39,8 +52,12 @@ public class Game {
 	
 	public static void main(String[] args) {
 		Game game = new Game();
-		game.setPlayer(new DummyPlayer("Bob", true));
-		game.setPlayer(new DummyPlayer("Alice", false));
+		Player dummy = new DummyPlayer("Bob");
+		dummy.setWhite(true);
+		game.setPlayer(dummy);
+		dummy = new DummyPlayer("Alice");
+		dummy.setWhite(false);
+		game.setPlayer(dummy);
 		game.play();
 	}
 

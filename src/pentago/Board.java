@@ -10,6 +10,8 @@ public class Board {
 	String SEP = "|";
 	String NL = "\n";
 	String HORSEP = "-";
+	Position winnerPosition;
+	boolean isWon = false;
 	
 	public Board() {
 		for (int i=0;i<4;i++) {
@@ -60,6 +62,8 @@ public class Board {
 					}
 					if (count == 5) {
 						// we have a bingo!
+						winnerPosition = p;
+						isWon = true;
 						return true;
 					}
 				}
@@ -130,7 +134,7 @@ public class Board {
 		} else if (tile == tiles[3]) {
 			c = coord.translate(-3, -3);
 		} else {
-			System.out.println("h��??");
+			System.out.println("Unknown tile for Coordinate translation.");
 		}
 		return c;
 	}

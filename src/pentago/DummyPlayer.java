@@ -2,20 +2,15 @@ package pentago;
 
 import java.util.Random;
 
-public class DummyPlayer implements Player {
+public class DummyPlayer extends AbstractPlayer implements Player {
 	
 	boolean white;
 	Random rand;
 	String name;
 	
-	public DummyPlayer(String name, boolean white) {
-		this.name = name;
-		this.white = white;
+	public DummyPlayer(String name) {
+		super(name);
 		rand = new Random();
-	}
-	
-	public boolean isWhite() {
-		return white;
 	}
 	
 	@Override
