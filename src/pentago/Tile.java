@@ -56,5 +56,13 @@ public class Tile {
 	public Position getPosition(Coordinate coord) {
 		return positions[coordToIndex(coord)];
 	}
+	
+	public Tile copy() {
+		Tile result = new Tile();
+		for (int i=0;i<9;i++) {
+			result.positions[i] = positions[i];
+		}
+		return result;
+	}
 
 }

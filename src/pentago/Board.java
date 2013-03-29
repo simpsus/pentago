@@ -33,9 +33,19 @@ public class Board {
 			} else {
 				moveTile.setPosition(tileCoord, Position.BLACK);
 			}
-			Tile rotTile = move.getRotationTile();
-			rotTile.rotate(move.getRotation());
+			Integer rotTile = move.getRotationTile();
+			tiles[rotTile].rotate(move.getRotation());
 		}
+	}
+	
+	public void undoMove(Move move) {
+		Coordinate c = move.getCoords();
+		//ditch checking, undoing an invalid move is bogus
+		Tile moveTile = getTileAtCoord(c);
+		Coordinate tileCoord = translateCoordToTile(c, moveTile);
+		moveTile.setPosition(tileCoord, Position.EMPTY);
+		Tile rotTile = tiles[move.getRotationTile()];
+		rotTile.rotate(move.getRotation().opposite());
 	}
 	
 	public boolean detectWin() {
@@ -144,6 +154,26 @@ public class Board {
 		Coordinate c = translateCoordToTile(coord, tile);
 		//System.out.println(coord + ":" + c);
 		return tile.getPosition(c);
+	}
+	
+	public List<Coordinate> getFreeCoordinates() {
+		List<Coordinate> result = new ArrayList<Coordinate>();
+		for (Coordinate c: getBoardCoordinates()) {
+			if (getPositionAtCoord(c) == Position.EMPTY) {
+				result.add(c);
+			}
+		}
+		return result;
+	}
+	
+	public Board copy() {
+		Board result = new Board();
+		result.winnerPosition = winnerPosition;
+		result.isWon = isWon;
+		for (int i=0;i<4;i++) {
+			result.tiles[i] = tiles[i].copy();
+		}
+		return result;
 	}
 
 }

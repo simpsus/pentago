@@ -22,7 +22,7 @@ public class DummyPlayer extends AbstractPlayer implements Player {
 		}
 		Move move = new Move();
 		move.setCoords(c);
-		move.setRotationTile(board.getTile(rand.nextInt(4)));
+		move.setRotationTile(rand.nextInt(4));
 		move.setRotation(rand.nextInt(2) == 0 ? Rotation.CLOCKWISE : Rotation.COUNTER);
 		move.setPlayer(this);
 		return move;

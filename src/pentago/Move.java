@@ -3,7 +3,7 @@ package pentago;
 public class Move {
 
 	Coordinate coords;
-	Tile rotationTile;
+	Integer rotationTile;
 	Rotation rotation;
 	Player player;
 	
@@ -13,10 +13,10 @@ public class Move {
 	public void setCoords(Coordinate coords) {
 		this.coords = coords;
 	}
-	public Tile getRotationTile() {
+	public Integer getRotationTile() {
 		return rotationTile;
 	}
-	public void setRotationTile(Tile rotationTile) {
+	public void setRotationTile(Integer rotationTile) {
 		this.rotationTile = rotationTile;
 	}
 	public Rotation getRotation() {

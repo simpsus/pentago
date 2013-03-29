@@ -61,9 +61,9 @@ public class Tournament {
 	}
 	
 	public static void main(String[] args) {
-		Tournament t = new Tournament(1000);
+		Tournament t = new Tournament(100);
 		t.addPlayer(new DummyPlayer("Bob"));
-		t.addPlayer(new DummyPlayer("Alice"));
+		t.addPlayer(new SniperPlayer("Alice"));
 		t.play();
 	}
 

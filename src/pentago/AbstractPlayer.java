@@ -20,5 +20,12 @@ public abstract class AbstractPlayer implements Player {
 	public String toString() {
 		return name;
 	}
+	
+	public Position getPosition() {
+		if (isWhite()) {
+			return Position.WHITE;
+		}
+		return Position.BLACK;
+	}
 
 }
