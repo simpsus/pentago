@@ -93,16 +93,23 @@ public class Board {
 	}
 	
 	public String toString() {
-		String result = "";
-		for (int i=0;i<3;i++) {
-			result += tiles[0].getLineRepresentation(i) + SEP + tiles[1].getLineRepresentation(i) + NL;
-		}
+		String result = " ";
 		for (int i=0;i<6;i++) {
+			if (i==3) {
+				result += SEP;
+			}
+			result += ""+i;
+		}
+		result += NL;
+		for (int i=0;i<3;i++) {
+			result += i + tiles[0].getLineRepresentation(i) + SEP + tiles[1].getLineRepresentation(i) + NL;
+		}
+		for (int i=0;i<7;i++) {
 			result += HORSEP;
 		}
 		result += NL;
 		for (int i=0;i<3;i++) {
-			result += tiles[2].getLineRepresentation(i) + SEP + tiles[3].getLineRepresentation(i) + NL;
+			result += (3+i) + tiles[2].getLineRepresentation(i) + SEP + tiles[3].getLineRepresentation(i) + NL;
 		}
 		return result;
 	}

@@ -32,4 +32,8 @@ public class Move {
 		this.player = player;
 	}
 	
+	public String toString() {
+		return player + ": " + coords + ", " + rotationTile + "(" + rotation + ")";
+	}
+	
 }

@@ -7,9 +7,21 @@ public class Game {
 	Board board;
 	Player winner;
 	boolean isTie = false;
+	int verbosity = 0;
 	
 	public Game() {
 		board = new Board();
+	}
+	
+	public Game(int verbosity) {
+		this();
+		this.verbosity = verbosity;
+	}
+	
+	void tell(String message, int importance) {
+		if (importance <= verbosity) {
+			System.out.println(message);
+		}
 	}
 	
 	public void setPlayer (Player player) {
@@ -20,21 +32,39 @@ public class Game {
 		}
 	}
 	
+	boolean playerMove(Player player) {
+		Move move = null;
+		boolean moveOK = false;
+		while (!moveOK) {
+			tell("Query move from " + player,2);
+			move = player.move(board);
+			moveOK = board.checkCoordinate(move.coords);
+			if (!moveOK) {
+				tell("Invalid Move from " + player + ": " + move,0);
+			}
+		}
+		board.move(move);
+		if (board.detectWin()) {
+			tell("Win detected", 2);
+			return true;
+		}
+		return false;
+	}
+	
 	public void play() {
+		tell("Starting Game.", 2);
 		for (int i=0;i<18;i++) {
-			Move whiteMove = white.move(board);
-			board.move(whiteMove);
-			if (board.detectWin()) {
+			if (playerMove(white)) {
 				break;
 			}
-			Move blackMove = black.move(board);
-			board.move(blackMove);
-			if (board.detectWin()) {
+			if (playerMove(black)) {
 				break;
 			}
 		}
 		if (board.isWon) {
 			Position winnerPos = board.winnerPosition;
+			tell("Winner is " + winnerPos, 2);
+			tell(toString(),2);
 			if (winnerPos == Position.BLACK) {
 				winner = black;
 			} else {
@@ -42,6 +72,7 @@ public class Game {
 			}
 		} else {
 			//We have a tie
+			tell("There is no Winner in this game.",2);
 			isTie = true;
 		}
 	}
