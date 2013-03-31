@@ -1,5 +1,8 @@
 package pentago;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public abstract class AbstractPlayer implements Player {
 
 	String name;
@@ -26,6 +29,23 @@ public abstract class AbstractPlayer implements Player {
 			return Position.WHITE;
 		}
 		return Position.BLACK;
+	}
+	
+	public Set<Move> getPossibleMoves(Board board) {
+		Set<Move> result = new HashSet<Move>();
+		for (Integer rotTile = 0; rotTile < 4;rotTile++) {
+			for (Rotation rot: Rotation.values()) {
+				for (Coordinate possible: board.getFreeCoordinates()) {
+					Move current = new Move();
+					current.setPlayer(this);
+					current.setCoords(possible);
+					current.setRotation(rot);
+					current.setRotationTile(rotTile);
+					result.add(current);
+				}
+			}
+		}
+		return result;
 	}
 
 }

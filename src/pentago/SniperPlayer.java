@@ -32,36 +32,25 @@ public class SniperPlayer extends AbstractPlayer implements Player {
 	public Move move(Board board) {
 		clone = board.copy();
 //		System.out.println("CLONE BEFORE" + clone);
-		Move currentMove;
 		int examinedMoves = 0;
 		Set<Move> backupMoves = new HashSet<Move>();
-		for (Integer rotTile = 0; rotTile < 4;rotTile++) {
-			for (Rotation rot: Rotation.values()) {
-				for (Coordinate possible: clone.getFreeCoordinates()) {
-					examinedMoves++;
-					currentMove = new Move();
-					currentMove.setCoords(possible);
-					currentMove.setPlayer(this);
-					currentMove.setRotation(rot);
-					currentMove.setRotationTile(rotTile);
-					clone.move(currentMove);
-					if (clone.detectWin()) {
-						if (clone.winnerPosition == getPosition()) {
-							System.out.println(examinedMoves);
-							tell(this + " wins with " + currentMove,1);
-							tell("Winning CLONE " + clone,2);
-							return currentMove;
-						} else {
-							tell("Losing Move! " + currentMove,1);
-							// I loose, don't do THAT!
-						}
-					} else {
-						//I haven't won or lost, it can't be too bad!
-						backupMoves.add(currentMove);
-					}
-					clone.undoMove(currentMove);
+		for (Move currentMove : getPossibleMoves(clone)) {
+			clone.move(currentMove);
+			if (clone.detectWin()) {
+				if (clone.winnerPosition == getPosition()) {
+					System.out.println(examinedMoves);
+					tell(this + " wins with " + currentMove, 1);
+					tell("Winning CLONE " + clone, 2);
+					return currentMove;
+				} else {
+					tell("Losing Move! " + currentMove, 1);
+					// I loose, don't do THAT!
 				}
+			} else {
+				// I haven't won or lost, it can't be too bad!
+				backupMoves.add(currentMove);
 			}
+			clone.undoMove(currentMove);
 		}
 //		System.out.println("CLONE AFTER" + clone);
 //		tell("Number of examined Moves: " + examinedMoves, 2);
