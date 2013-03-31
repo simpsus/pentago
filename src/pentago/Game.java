@@ -60,6 +60,8 @@ public class Game {
 			if (playerMove(black)) {
 				break;
 			}
+			tell("After current Move: ",2);
+			tell(toString(),2);
 		}
 		if (board.isWon) {
 			Position winnerPos = board.winnerPosition;

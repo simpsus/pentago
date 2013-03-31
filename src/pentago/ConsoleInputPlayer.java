@@ -13,7 +13,7 @@ public class ConsoleInputPlayer extends AbstractPlayer {
 		br = new BufferedReader(new InputStreamReader(System.in));
 	}
 
-	@Override
+	@Override 
 	public Move move(Board board) {
 		System.out.println("Move required. White? " + isWhite());
 		boolean successful = false;

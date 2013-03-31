@@ -80,8 +80,8 @@ public class Tournament {
 	public static void main(String[] args) {
 		Tournament t = new Tournament(1);
 		t.setVerbosity(2);
-		t.addPlayer(new ConsoleInputPlayer("Bob"));
 		t.addPlayer(new SniperPlayer("Alice",2));
+		t.addPlayer(new DummyPlayer("Bob"));
 		t.play();
 	}
 

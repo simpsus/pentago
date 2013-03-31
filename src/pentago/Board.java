@@ -12,6 +12,7 @@ public class Board {
 	String HORSEP = "-";
 	Position winnerPosition;
 	boolean isWon = false;
+	int undoCount = 0;
 	
 	public Board() {
 		for (int i=0;i<4;i++) {
@@ -39,13 +40,15 @@ public class Board {
 	}
 	
 	public void undoMove(Move move) {
+		++undoCount;
+		//Change rotation and position and rotate first so that the coordinates match again!
+		move.setRotation(move.getRotation().opposite());
+		Integer rotTile = move.getRotationTile();
+		tiles[rotTile].rotate(move.getRotation());
 		Coordinate c = move.getCoords();
-		//ditch checking, undoing an invalid move is bogus
 		Tile moveTile = getTileAtCoord(c);
 		Coordinate tileCoord = translateCoordToTile(c, moveTile);
 		moveTile.setPosition(tileCoord, Position.EMPTY);
-		Tile rotTile = tiles[move.getRotationTile()];
-		rotTile.rotate(move.getRotation().opposite());
 	}
 	
 	public boolean detectWin() {
@@ -182,5 +185,22 @@ public class Board {
 		}
 		return result;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Board)) {
+			return false;
+		}
+		Board other = (Board) obj;
+		for (int i=0;i<4;i++) {
+			if (!tiles[i].equals(other.tiles[i])) {
+				System.out.println("Tile Nr" + i);
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	
 
 }

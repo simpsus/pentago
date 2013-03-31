@@ -65,4 +65,21 @@ public class Tile {
 		return result;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Tile)) {
+			return false;
+		}
+		Tile other = (Tile) obj;
+		for (int i=0;i<positions.length;i++) {
+			if (positions[i] != other.positions[i]) {
+//				System.out.println("expecting " +positions[i] + " but found " + other.positions[i]);
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	
+
 }
