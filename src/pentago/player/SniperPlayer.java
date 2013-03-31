@@ -1,8 +1,12 @@
-package pentago;
+package pentago.player;
 
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+
+import pentago.Board;
+import pentago.Move;
+import pentago.Player;
 
 public class SniperPlayer extends AbstractPlayer implements Player {
 
@@ -37,7 +41,7 @@ public class SniperPlayer extends AbstractPlayer implements Player {
 		for (Move currentMove : getPossibleMoves(clone)) {
 			clone.move(currentMove);
 			if (clone.detectWin()) {
-				if (clone.winnerPosition == getPosition()) {
+				if (clone.getWinnerPosition() == getPosition()) {
 					System.out.println(examinedMoves);
 					tell(this + " wins with " + currentMove, 1);
 					tell("Winning CLONE " + clone, 2);

@@ -10,7 +10,7 @@ public class Board {
 	String SEP = "|";
 	String NL = "\n";
 	String HORSEP = "-";
-	Position winnerPosition;
+	private Position winnerPosition;
 	boolean isWon = false;
 	int undoCount = 0;
 	
@@ -75,7 +75,7 @@ public class Board {
 					}
 					if (count == 5) {
 						// we have a bingo!
-						winnerPosition = p;
+						setWinnerPosition(p);
 						isWon = true;
 						return true;
 					}
@@ -178,7 +178,7 @@ public class Board {
 	
 	public Board copy() {
 		Board result = new Board();
-		result.winnerPosition = winnerPosition;
+		result.setWinnerPosition(winnerPosition);
 		result.isWon = isWon;
 		for (int i=0;i<4;i++) {
 			result.tiles[i] = tiles[i].copy();
@@ -199,6 +199,14 @@ public class Board {
 			}
 		}
 		return true;
+	}
+
+	public Position getWinnerPosition() {
+		return winnerPosition;
+	}
+
+	private void setWinnerPosition(Position winnerPosition) {
+		this.winnerPosition = winnerPosition;
 	}
 	
 	

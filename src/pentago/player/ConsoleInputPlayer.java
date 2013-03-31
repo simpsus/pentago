@@ -1,8 +1,13 @@
-package pentago;
+package pentago.player;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
+import pentago.Board;
+import pentago.Coordinate;
+import pentago.Move;
+import pentago.Rotation;
 
 public class ConsoleInputPlayer extends AbstractPlayer {
 	

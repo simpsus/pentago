@@ -1,6 +1,12 @@
-package pentago;
+package pentago.player;
 
 import java.util.Random;
+
+import pentago.Board;
+import pentago.Coordinate;
+import pentago.Move;
+import pentago.Player;
+import pentago.Rotation;
 
 public class DummyPlayer extends AbstractPlayer implements Player {
 	

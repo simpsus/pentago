@@ -1,5 +1,7 @@
 package pentago;
 
+import pentago.player.DummyPlayer;
+
 public class Game {
 	
 	Player white;
@@ -64,7 +66,7 @@ public class Game {
 			tell(toString(),2);
 		}
 		if (board.isWon) {
-			Position winnerPos = board.winnerPosition;
+			Position winnerPos = board.getWinnerPosition();
 			tell("Winner is " + winnerPos, 2);
 			tell(toString(),2);
 			if (winnerPos == Position.BLACK) {

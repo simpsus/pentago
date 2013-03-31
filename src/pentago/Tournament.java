@@ -3,6 +3,9 @@ package pentago;
 import java.util.HashMap;
 import java.util.Map;
 
+import pentago.player.DummyPlayer;
+import pentago.player.SniperPlayer;
+
 public class Tournament {
 
 	int rounds;

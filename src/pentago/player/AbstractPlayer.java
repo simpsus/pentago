@@ -1,7 +1,14 @@
-package pentago;
+package pentago.player;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import pentago.Board;
+import pentago.Coordinate;
+import pentago.Move;
+import pentago.Player;
+import pentago.Position;
+import pentago.Rotation;
 
 public abstract class AbstractPlayer implements Player {
 
