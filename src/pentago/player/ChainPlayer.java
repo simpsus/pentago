@@ -1,10 +1,11 @@
 package pentago.player;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import pentago.Board;
+import pentago.Chain;
 import pentago.Move;
 
 public class ChainPlayer extends AbstractPlayer {
@@ -14,33 +15,43 @@ public class ChainPlayer extends AbstractPlayer {
 	public ChainPlayer(String name) {
 		super(name);
 	}
+	
+	private Map<Integer,Integer> analyzeChains(Set<Chain> chains) {
+		Map<Integer,Integer> chainLengths = new HashMap<Integer,Integer>();
+		for (Chain chain: chains) {
+			if (!chainLengths.containsKey(chain.getSize())) {
+				chainLengths.put(chain.getSize(),0);
+			}
+			chainLengths.put(chain.getSize(),chainLengths.get(chain.getSize())+1);
+		}
+		return chainLengths;
+	}
 
 	@Override
 	public Move move(Board board) {
-		// This player fails if no chain is longer than the currently longest
-		// The key is finding out whether or not the current move contributes
-		// to the longest chain or not
 		Board clone = board.copy();
-		impactMoves = new HashMap<Integer, Move>();
-		int before, after;
+		Set<Chain> chains = board.getAllChains(getPosition());
+		Map<Integer,Integer> beforeLengths = analyzeChains(chains);
+		// Now lets try to expand them with any of the possible moves
 		for (Move m: getPossibleMoves(board)) {
-			before = clone.getLongestChain(getPosition());
 			clone.move(m);
-			if (clone.detectWin()) {
-				if (clone.getWinnerPosition() == getPosition()) {
-					return m;
-				} 
-			}
-			after = clone.getLongestChain(getPosition());
-//			System.out.println(before + " " + after);
-			if (after > before) {
-//				System.out.println("yes!");
-				// the move has actually had an impact
-				impactMoves.put(after,m);
+			Map<Integer,Integer> afterLengths = analyzeChains(clone.getAllChains(getPosition()));
+			for (Integer length : new Integer[]{5,4,3,2}) {
+				if (afterLengths.containsKey(length)) {
+					if (!beforeLengths.containsKey(length)) {
+						return m;
+					} else {
+//						System.out.println("Before " + beforeLengths);
+//						System.out.println("After " + afterLengths);
+						if (afterLengths.get(length) > beforeLengths.get(length)) {
+							return m;
+						}
+					}
+				}
 			}
 			clone.undoMove(m);
 		}
-		return impactMoves.get(Collections.max(impactMoves.keySet()));
+		return (Move) getPossibleMoves(board).toArray()[0];
 	}
 
 }

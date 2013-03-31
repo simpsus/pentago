@@ -2,7 +2,9 @@
 package pentago;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Board {
 	
@@ -58,12 +60,12 @@ public class Board {
 			Position p = getPositionAtCoord(c);
 			if (p.isPlayer()) {
 				// there are 8 possible ways to win from this position
-				for (String direction : Coordinate.DIRECTIONS) {
+				for (Direction direction : Direction.values()) {
 					int count = 1;
 					Coordinate nextC = c;
 					while (count != 5) {
 						try {
-							nextC = nextC.getDirection(direction);
+							nextC = direction.walk(nextC);
 							if (getPositionAtCoord(nextC).equals(p)) {
 								count++;
 							} else {
@@ -208,30 +210,35 @@ public class Board {
 	private void setWinnerPosition(Position winnerPosition) {
 		this.winnerPosition = winnerPosition;
 	}
-
-	public int getLongestChain(Position position) {
-		int result = 0;
+	
+	public Set<Chain> getAllChains(Position position) {
+		Set<Chain> result = new HashSet<Chain>();
 		for (Coordinate c: getBoardCoordinates()) {
 			Position p = getPositionAtCoord(c);
 			if (p == position) {
-				// there are 8 possible ways to win from this position
-				for (String direction : Coordinate.DIRECTIONS) {
+				// there are 8 possible ways from this position 
+				for (Direction direction : Direction.values()) {
+					// That is the chain from the position itself
+					Chain chain = new Chain(position, direction);
+					chain.add(c);
 					int count = 1;
-					//failsafing an empty board
-					result = Math.max(result, count);
 					Coordinate nextC = c;
-					while (count != 5) {
+					while (count <= 5) {
 						try {
-							nextC = nextC.getDirection(direction);
+							nextC = direction.walk(nextC);
 							if (getPositionAtCoord(nextC).equals(p)) {
 								count++;
-								result = Math.max(result, count);
+								chain.add(nextC);
 							} else {
 								break;
 							}
 						} catch (InvalidCoordinateException ex) {
 							break;
 						}
+					}
+					//only add chains longer than 1
+					if (chain.getSize() > 1) {
+						result.add(chain);
 					}
 				}
 			}

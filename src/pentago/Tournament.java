@@ -81,7 +81,7 @@ public class Tournament {
 	}
 	
 	public static void main(String[] args) {
-		Tournament t = new Tournament(100);
+		Tournament t = new Tournament(1);
 		t.setVerbosity(2);
 		t.addPlayer(new ChainPlayer("Alice"));
 		t.addPlayer(new DummyPlayer("Bob"));

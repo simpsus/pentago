@@ -2,8 +2,6 @@ package pentago;
 
 public class Coordinate {
 	
-	public static String[] DIRECTIONS =  new String[]{"L","R","U","D","LU","LD","RU","RD"};
-	
 	int x;
 	int y;
 	
@@ -18,28 +16,6 @@ public class Coordinate {
 
 	public int getY() {
 		return y;
-	}
-	
-	public Coordinate getDirection(String direction) throws InvalidCoordinateException {
-		if (direction.equals("L")) {
-			return left();
-		} else if (direction.equals("R")) {
-			return right();
-		} else if (direction.equals("U")) {
-			return up();
-		} else if (direction.equals("D")) {
-			return down();
-		} else if (direction.equals("LU")) {
-			return leftUp();
-		} else if (direction.equals("LD")) {
-			return leftDown();
-		} else if (direction.equals("RU")) {
-			return rightUp();
-		} else if (direction.equals("RD")) {
-			return rightDown();
-		} else {
-			throw new RuntimeException("Invalide direction " + direction);
-		}
 	}
 	
 	public Coordinate translate(int dx, int dy) {
