@@ -208,6 +208,36 @@ public class Board {
 	private void setWinnerPosition(Position winnerPosition) {
 		this.winnerPosition = winnerPosition;
 	}
+
+	public int getLongestChain(Position position) {
+		int result = 0;
+		for (Coordinate c: getBoardCoordinates()) {
+			Position p = getPositionAtCoord(c);
+			if (p == position) {
+				// there are 8 possible ways to win from this position
+				for (String direction : Coordinate.DIRECTIONS) {
+					int count = 1;
+					//failsafing an empty board
+					result = Math.max(result, count);
+					Coordinate nextC = c;
+					while (count != 5) {
+						try {
+							nextC = nextC.getDirection(direction);
+							if (getPositionAtCoord(nextC).equals(p)) {
+								count++;
+								result = Math.max(result, count);
+							} else {
+								break;
+							}
+						} catch (InvalidCoordinateException ex) {
+							break;
+						}
+					}
+				}
+			}
+		}
+		return result;
+	}
 	
 	
 

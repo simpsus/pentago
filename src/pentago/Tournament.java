@@ -3,8 +3,8 @@ package pentago;
 import java.util.HashMap;
 import java.util.Map;
 
+import pentago.player.ChainPlayer;
 import pentago.player.DummyPlayer;
-import pentago.player.SniperPlayer;
 
 public class Tournament {
 
@@ -81,9 +81,9 @@ public class Tournament {
 	}
 	
 	public static void main(String[] args) {
-		Tournament t = new Tournament(1);
+		Tournament t = new Tournament(100);
 		t.setVerbosity(2);
-		t.addPlayer(new SniperPlayer("Alice",2));
+		t.addPlayer(new ChainPlayer("Alice"));
 		t.addPlayer(new DummyPlayer("Bob"));
 		t.play();
 	}
